@@ -21,6 +21,10 @@ def load_model():
 df = load_data()
 model = load_model()
 
+# Force model feature columns to numeric
+for col in feature_cols:
+    df[col] = pd.to_numeric(df[col], errors="coerce")
+
 # FEATURES USED BY FINAL MODEL
 feature_cols = [
     "zhvi_2026_03",
