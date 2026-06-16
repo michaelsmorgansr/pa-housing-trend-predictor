@@ -5,8 +5,8 @@ import streamlit as st
 
 BASE_DIR = Path(__file__).resolve().parent
 
-DATA_PATH = BASE_DIR.parent / "data" / "pa_modeling_w_acs_tri_flood.csv"
-MODEL_PATH = BASE_DIR.parent / "models" / "linear_regression_model_with_tri_fema.joblib"
+DATA_PATH = BASE_DIR / "data" / "pa_modeling_w_acs_tri_flood.csv"
+MODEL_PATH = BASE_DIR / "models" / "linear_regression_model_with_tri_fema.joblib"
 
 @st.cache_data
 def load_data():
