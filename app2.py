@@ -1,27 +1,22 @@
-import streamlit as st
+from pathlib import Path
 import pandas as pd
 import joblib
-import numpy as np
+import streamlit as st
 
-# PAGE CONFIG
-st.set_page_config(page_title="PA Housing Trend Predictor", layout="wide")
+BASE_DIR = Path(__file__).resolve().parent
 
-st.title("Pennsylvania ZIP Housing Trend Predictor")
-st.write(
-    "This app predicts 12-month % change in single-family Zillow Home Value Index (ZHVI) "
-    "for Pennsylvania ZIP codes using housing, socioeconomic, environmental, and flood-related features."
-)
+DATA_PATH = BASE_DIR.parent / "data" / "pa_modeling_w_acs_tri_flood.csv"
+MODEL_PATH = BASE_DIR.parent / "models" / "linear_regression_model_with_tri_fema.joblib"
 
-# LOAD DATA + MODEL
 @st.cache_data
 def load_data():
-    df = pd.read_csv("pa_modeling_w_acs_tri_flood.csv", dtype={"zcta": str})
+    df = pd.read_csv(DATA_PATH, dtype={"zcta": str})
     df["zcta"] = df["zcta"].astype(str).str.zfill(5)
     return df
 
 @st.cache_resource
 def load_model():
-    return joblib.load("linear_regression_model_with_tri_fema.joblib")
+    return joblib.load(MODEL_PATH)
 
 df = load_data()
 model = load_model()
